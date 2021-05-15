@@ -9,15 +9,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 
-/* express()
-  .use(express.static(path.join(__dirname, "public")))
-  .set("views", path.join(__dirname, "views"))
-  .set("view engine", "ejs")
-  .get("/", (req, res) => res.render("app"))
-  .get("/cool", (req, res) => res.send(cool()))
-  .listen(PORT, () => console.log(`Listening on ${PORT}`));
+ 
 
- */
 
 mongoose.connect(
   "mongodb+srv://sampletest:test-123@cluster0.hqxub.mongodb.net/todolistDB",
@@ -92,6 +85,13 @@ if (port == null || port == "") {
   port = 3000;
 }
 app.listen(port);*/
-app.listen(PORT, function () {
+/* app.listen(PORT, function () {
   console.log("server is up and running ");
 }); 
+ */
+
+app.use(express.static(path.join(__dirname, "public")))
+.get("/", (req, res) => res.redirect("list"))
+.get("/cool", (req, res) => res.send(cool()))
+.listen(PORT, () => console.log(`Listening on ${PORT}`));
+
