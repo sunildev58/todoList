@@ -8,6 +8,17 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
+
+/* express()
+  .use(express.static(path.join(__dirname, "public")))
+  .set("views", path.join(__dirname, "views"))
+  .set("view engine", "ejs")
+  .get("/", (req, res) => res.render("app"))
+  .get("/cool", (req, res) => res.send(cool()))
+  .listen(PORT, () => console.log(`Listening on ${PORT}`));
+
+ */
+
 mongoose.connect(
   "mongodb+srv://sampletest:test-123@cluster0.hqxub.mongodb.net/todolistDB",
   {
@@ -75,18 +86,12 @@ app.get("/:queryparam", function (req, res) {
   let sampleparam = req.params.queryparam;
   res.render("dynamic", { paramlist: sampleparam });
 });
-express()
-  .use(express.static(path.join(__dirname, "public")))
-  .set("views", path.join(__dirname, "views"))
-  .set("view engine", "ejs")
-  .get("/", (req, res) => res.render("pages/index"))
-  .get("/cool", (req, res) => res.send(cool()))
-  .listen(PORT, () => console.log(`Listening on ${PORT}`));
-let port = process.env.PORT;
+
+/* let port = process.env.PORT;
 if (port == null || port == "") {
   port = 3000;
 }
-app.listen(port);
-app.listen(port, function () {
+app.listen(port);*/
+app.listen(PORT, function () {
   console.log("server is up and running ");
-});
+}); 
