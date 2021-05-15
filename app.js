@@ -1,14 +1,20 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const cool = require("cool-ascii-faces");
+const path = require("path");
+const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
-mongoose.connect("mongodb+srv://sampletest:test-123@cluster0.hqxub.mongodb.net/todolistDB", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(
+  "mongodb+srv://sampletest:test-123@cluster0.hqxub.mongodb.net/todolistDB",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
 const listSchema = {
   name: String,
 };
@@ -65,15 +71,22 @@ app.post("/delete", function (req, res) {
   });
 });
 app.get("/work", function (req, res) {});
-app.get("/:queryparam", function(req, res){
-  let sampleparam = req.params.queryparam
-  res.render("dynamic", {paramlist :sampleparam})
-})
+app.get("/:queryparam", function (req, res) {
+  let sampleparam = req.params.queryparam;
+  res.render("dynamic", { paramlist: sampleparam });
+});
+express()
+  .use(express.static(path.join(__dirname, "public")))
+  .set("views", path.join(__dirname, "views"))
+  .set("view engine", "ejs")
+  .get("/", (req, res) => res.render("pages/index"))
+  .get("/cool", (req, res) => res.send(cool()))
+  .listen(PORT, () => console.log(`Listening on ${PORT}`));
 let port = process.env.PORT;
-if(port==null || port==""){
-  port=3000;
+if (port == null || port == "") {
+  port = 3000;
 }
-app.listen(port)
+app.listen(port);
 app.listen(port, function () {
   console.log("server is up and running ");
 });
