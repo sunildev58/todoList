@@ -69,6 +69,11 @@ app.get("/:queryparam", function(req, res){
   let sampleparam = req.params.queryparam
   res.render("dynamic", {paramlist :sampleparam})
 })
-app.listen("3000", function () {
+let port = process.env.PORT;
+if(port==null || port==""){
+  port=3000;
+}
+app.listen(port)
+app.listen(port, function () {
   console.log("server is up and running ");
 });
